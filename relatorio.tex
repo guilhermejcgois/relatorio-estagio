@@ -3,9 +3,11 @@
 \begin{document}
 
 \section{Descrição da Organização}
-(Máximo: 2 páginas)
+A Fundação de Estudos e Pesquisas Agrícolas e Florestais (FEPAF) foi fundada em Botucatu, no ano de 1980, com personalidade jurídica de direito privado e sem fins lucrativos. Sediada na Faculdade de Ciências Agronômicas (FCA) da UNESP (Univerisdade Estadual Paulista "Júlio de Mesquita Filho"), mais precisamente na Fazenda Experimental Lageado tem por finalidade apoiar programas de desenvolvimento sustentável (nas 3 esferas, econmômica, social e ambiental) da própria UNESP e também de outras instituições, através da articulação com estas.
 
-Conteúdo: histórico e ambiente de negócios em  que a empresa opera (contexto, o setor econômico, os principais produtos, concorrentes, fornecedores, consumidores, etc)
+Sua principal atividade é a administração de projetos de pesquisa realizados por equipes de docentes da FCA e de outras instituições relacionadas à agricultura, agroindústria, indústria de insumos e equipamentos agropecuários, preservação e recuperação ambiental. E, coerente com sua missão social, estes projetos contemplam bolsas de auxílio aos alunos de graduação e pós-graduação envolvidos nas pesquisas.
+
+Algumas das atividades realizadas pela instituição estão ligadas a difusão e divulgação de conhecimento (ambientais, agronômicos, florestais e correlatos) através cursos universitários de especialização e extensão, simpósios, seminários e publicações técnicas, periódicas, monografias etc. Também com um viés dentro da academia, a FEPAF busca também a colaboração no aperfeiçoamento  dos cursos de pós-graduação da FCA e de outros unidades da UNESP, ou de qualquer outra instituição universitária que solicite seus serviços, além do desenvolvimento de pesquisas que atendam às necessidades tanto do setor público como no privado.
 
 \section{Descrição do ambiente tecnológico}
 Como trabalho remotamente, para desenvolver o projeto utilizo meu próprio ultrabook com as seguintes configurações:
@@ -35,10 +37,27 @@ Falando em software, estão sendo utilizados os seguintes com respectivas versõ
 
 \section{Relatório das atividades desenvolvidas pelo aluno}
 \subsection{Estágio 1}
-- Descrição do conteúdo (detalhamento)
-- Cronograma das atividades
-- Resultados atingidos
+Nos primeiros dois meses o trabalho com o Sistema Informatizado de Gestão Ambiental do município de São Roque envolveu basicametne além de seu desenvolvimento também a elaboração conceitual de acordo com suas peculiariedades e necessidades. Tal elaboração inicial compreendeu todo um estudo a cerca de sistemas semelhantes e como operam, identificando pontos fortes e fracos para serem aproveitados ou evitados no projeto, visando sempre a necessidade do cliente como também os dados provenientes da equipe responsável por estes. Tais dados necessitam ser tratados por uma equipe separada pelo fato de serem dados específicos, geoespaciais de nível técnico da área ambiental, logo esses dados chegam prontos e apenas são inseridos no banco de dados para posterior exibição. Esses dados nós chamamos de camadas, as camadas são compostas por feições que representam características desta, sendo que uma camada representa um aspecto geográfico de um dado espaço, podendo representar por exemplo relevo, hidrografia, bairros, etc.
 
+Na etapa de desenvolvimento trabalhamos em um produto que oferecesse funcionalidades básicas que possibilitassem o uso do sistema, que está sendo desenvolvido de maneira incremental em questão de funcionalidades. Começamos apenas exibindo o mapa do espaço geográfico
+que queremos, depois juntamente com o início da programaação do lado servidor começamos a inserir e remover apenas uma camada para em seguida trabalhar com mais de uma. Em seguida foi desenvolvido um controle de interface que nos permite alterar o mapa do espaço geográfico (trocar entre um mapa colorido e um mapa em preto e branco por exemplo) e trabalhar na inserção e remoção de camadas no mapa, além de trabalhar a opacidade de uma camada em específico, visto que comos concluímos durante nossa pesquisa durante a fase da elaboração conceitual que podemos ter um cenário onde mais de uma camada se sobrepõem de tal maneira que uma oculta totalmente uma informação de outra.
+
+A partir dessa primeira versão partimos para algo mais ousado, desenvolver um controle de interface que nos permitisse trabalhar com o empilhamento das camadas, então o problema de uma sobrepor a outra podemos resolver agora simplesmente pegando a camada sendo sobreposta e colocando-a no topo da pilha das camadas. Mas não foi apenas isso, começamos a adotar a React, uma biblioteca para construir e gerenciar componentes de interfaces desenvolvidas e mantidas pelo Facebook. No lado do servidor, começamos a trabalhar com metadados nas tabelas das camadas no banco de dados, uma vez que o nome da tabela e das colunas não podiam ser utilizados para exibição com o usuário, consequentemente nos levou a ter a necessidade de programar mais um serviço para expor esse novo recurso ao usuário através de nossa API.
+
+O cronograma seguido pode ser conferido na tabela abaixo:
+
+\begin{table}[]
+\centering
+\caption{Cronograma}
+\label{my-label}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Início} & \textbf{Fim} & \textbf{Atividades} \\ \hline
+01/07 & 01/08 & \begin{tabular}[c]{@{}l@{}}Pesquisa de produtos relacionados; \\ Familiarização com tecnologias; \\ Definição de Requisitos e Product Backlog\end{tabular} \\ \hline
+02/08 & 16/08 & \begin{tabular}[c]{@{}l@{}}Implementação inicial do back end; \\ Implementação da interface inicial com controles de zoom e camadas\end{tabular} \\ \hline
+17/08 & 05/09 & \begin{tabular}[c]{@{}l@{}}Adoção da React;\\ Adoção do uso de metadados no banco de dados;\\ Implementação do controle de camadas ativas\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
 
 \section{Reflexão por parte do aluno sobre as principais contribuições ao projeto}
 Como o projeto foi iniciado do zero comigo, minha contribuição está em todo o projeto. Toda a fundação do projeto está sendo feita por mim, desde definição da arquitetura até a interface, sendo elas construídas pensando na manutenibilidade do sistema como um todo, além ainda de procurar manter o código de fácil extensão e modificação (o \textit{framework} utilizado no \textit{backend} possibilita isso), entregar um código padronizado e de qualidade é uma preocupação. Também há documentação em código deixando mais claro seu funcionamento em alguns pontos para facilitar o entendimento do que aquele trecho de código está fazendo, pois há uma preocupação de minha parte para com quem venha a mexer em meu código depois de mim, ou mesmo que entre outro membro no projeto e até mesmo caso eu volto a ver o código depois de um tempo e lembrar o que o mesmo faz.
@@ -104,7 +123,6 @@ Achei que pudesse ter dificuldades de comunicação com meu supervisor e eventua
 Os tópicos a seguir são alguns dos tópicos necessário no estágio que acredito que poderiam ter sido abordados no curso de Computação:
 \begin{itemize}
   \item \textbf{Git:} tecnologia para versionamento popular que merece atenção, pois permite além de fazer o controle das versões do código torna fácil realizar \textit{rollback} na base de código em algum ponto especifíco do tempo.
-  \item \textbf{:}
 \end{itemize}
 
 \end{document}
