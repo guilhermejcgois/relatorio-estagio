@@ -1,5 +1,8 @@
 \documentclass{ufscar}
 
+\usepackage{float}
+\restylefloat{table}
+
 \begin{document}
 
 \section{Descrição da Organização}
@@ -26,41 +29,44 @@ Falando em software, estão sendo utilizados os seguintes com respectivas versõ
   \item PostGIS v2.1.1
   \item PHP v5.6.25
   \item PhalconPHP v3.0.1
-  \item LeafletJS v1.0.0-rc.3
+  \item LeafletJS v1.0
   \item Mozilla Firefox 47.0
   \item Atom Editor v1.9.9
   \item Git v2.7.4
   \item NPM v2.15.9
   \item Bower v1.7.9
   \item React v15.3.2
+  \item GulpJS v3.9.1
+  \item SASS 3.4.22
 \end{itemize}
 
 \section{Relatório das atividades desenvolvidas pelo aluno}
-\subsection{Estágio 1}
-Nos primeiros dois meses o trabalho com o Sistema Informatizado de Gestão Ambiental do município de São Roque envolveu basicametne além de seu desenvolvimento também a elaboração conceitual de acordo com suas peculiariedades e necessidades. Tal elaboração inicial compreendeu todo um estudo a cerca de sistemas semelhantes e como operam, identificando pontos fortes e fracos para serem aproveitados ou evitados no projeto, visando sempre a necessidade do cliente como também os dados provenientes da equipe responsável por estes. Tais dados necessitam ser tratados por uma equipe separada pelo fato de serem dados específicos, geoespaciais de nível técnico da área ambiental, logo esses dados chegam prontos e apenas são inseridos no banco de dados para posterior exibição. Esses dados nós chamamos de camadas, as camadas são compostas por feições que representam características desta, sendo que uma camada representa um aspecto geográfico de um dado espaço, podendo representar por exemplo relevo, hidrografia, bairros, etc.
+\subsection{Estágio 2}
+Continuando o desenvolvimento do Sistema Informatizado de Gestão Ambiental do município de São Roque, foi adotado o uso de um automatizador de tarefas, GulpJS, para tornar a transpilação do código escrito com a React e também com a SASS (um pré-processador de CSS) automática, acontecento assim tão logo quanto as alterações nos arquivos sejam salvas. Também foi construído a ferramenta responsável pelo controle da opacidade de um camada, \it{feature} essa que tinha sido removida devido a adição do controle de empilhamento das camadas, onde ela atualmente se encontra disponível para uso.
 
-Na etapa de desenvolvimento trabalhamos em um produto que oferecesse funcionalidades básicas que possibilitassem o uso do sistema, que está sendo desenvolvido de maneira incremental em questão de funcionalidades. Começamos apenas exibindo o mapa do espaço geográfico
-que queremos, depois juntamente com o início da programaação do lado servidor começamos a inserir e remover apenas uma camada para em seguida trabalhar com mais de uma. Em seguida foi desenvolvido um controle de interface que nos permite alterar o mapa do espaço geográfico (trocar entre um mapa colorido e um mapa em preto e branco por exemplo) e trabalhar na inserção e remoção de camadas no mapa, além de trabalhar a opacidade de uma camada em específico, visto que comos concluímos durante nossa pesquisa durante a fase da elaboração conceitual que podemos ter um cenário onde mais de uma camada se sobrepõem de tal maneira que uma oculta totalmente uma informação de outra.
+Após finalizar a ferramenta de opacidade, foi iniciado o desenvolvimento da ferramenta de busca nas camadas, essa ferramenta de busca trabalha com dados comuns (inteiro, string, ponto flutuante, etc.) e não dados geográficos. Os dados inseridos pelo usuário são comparados com os dados das feições da camada em questão, destacando as camadas que conferem com os dados fornecidos pelo usuário dos que não conferem. Os dados disponíveis nas feições eram dados numéricos e strings e devido a natureza dos tipos de filtros que é possível fazer foi dividido em duas etapas. Outra \textit{feature} interessante é a recuperação dessas informações de uma feição, que ao clicar na feição o usuário pode conferir essas características através de um \textit{popup}, que se fecha ao usuário sair para fora dos limites dessa feição.
 
-A partir dessa primeira versão partimos para algo mais ousado, desenvolver um controle de interface que nos permitisse trabalhar com o empilhamento das camadas, então o problema de uma sobrepor a outra podemos resolver agora simplesmente pegando a camada sendo sobreposta e colocando-a no topo da pilha das camadas. Mas não foi apenas isso, começamos a adotar a React, uma biblioteca para construir e gerenciar componentes de interfaces desenvolvidas e mantidas pelo Facebook. No lado do servidor, começamos a trabalhar com metadados nas tabelas das camadas no banco de dados, uma vez que o nome da tabela e das colunas não podiam ser utilizados para exibição com o usuário, consequentemente nos levou a ter a necessidade de programar mais um serviço para expor esse novo recurso ao usuário através de nossa API.
+Foram feitas melhorias relacionadas a interface, tanto na interface apresentada ao usuário de fato como em sua composição estrutural, onde a componentização de seus componentes foi feita, basicamente deixando cada componente em seu arquivo próprio. Se tratando do que o usuário de fato vê e interaje, foram feitas algumas melhorias em questão de posicionamento e tamanho dos controles existentes, fechar a visualização do mapa apenas no município de São Roque já que não haverão dados a serem mostrados fora de seu limite, além de adicionarmos um controle que permite o rastreio das coordenadas geográficas a partir da posição do mouse sobre o mapa. Foi feita a adaptação de um plugin do Leaflet que realiza o cálculo de medidas (como distância entre dois pontos e área) para que este se adequasse a nossa interface, que subistitui a dele próprio e desacoplando os cálculos que ele pode fazer, no caso da distância e área, e sempre finalizava o desenho do que ia ser calculado com o duplo clique, então dois pontos levavam ao cálculo da distância entre eles, de 3 pontos em diante ele compreendia o desenho como um polígono e então calculava sua área e perímetro, e precisávamos que esses cálculos estivessem em controles separados.
 
-O cronograma seguido pode ser conferido na tabela abaixo:
+As duas últimas \textit{features} da primeira versão do sistema foram implementadas, a impressão e o relatório do mapa. No caso da impressão, era necessário apenas imprimir o mapa tal como estava sendo visualizado, porém sem os controles de interação com o mapa. No caso do relatório, ele é feito apenas com a camada mais ao topo da pilha, listando todos os dados das feições da camada. Ambas as \textit{features} necessitam que o estado atual do mapa seja salvo no servidor, o que levou a necessidade da criação de serviços para salvar e recuperar esses estados, pois precisamos visualizarmos em aba separada o que será impresso para o usuário.
 
-\begin{table}[]
+O cronograma pode ser conferido na tabela abaixo:
+
+\begin{table}[H]
 \centering
 \caption{Cronograma}
 \label{my-label}
 \begin{tabular}{|l|l|l|}
 \hline
 \textbf{Início} & \textbf{Fim} & \textbf{Atividades} \\ \hline
-01/07 & 01/08 & \begin{tabular}[c]{@{}l@{}}Pesquisa de produtos relacionados; \\ Familiarização com tecnologias; \\ Definição de Requisitos e Product Backlog\end{tabular} \\ \hline
-02/08 & 16/08 & \begin{tabular}[c]{@{}l@{}}Implementação inicial do back end; \\ Implementação da interface inicial com controles de zoom e camadas\end{tabular} \\ \hline
-17/08 & 05/09 & \begin{tabular}[c]{@{}l@{}}Adoção da React;\\ Adoção do uso de metadados no banco de dados;\\ Implementação do controle de camadas ativas\end{tabular} \\ \hline
+06/09 & 20/09 & \begin{tabular}[c]{@{}l@{}}Adoção do GulpJS e do SASS; \\ Reimplementação da ferramenta de opacidade; \\ Implementação da busca por dados não numéricos \\ Exibir as características de uma feição para o usuário\end{tabular} \\ \hline
+21/09 & 07/10 & \begin{tabular}[c]{@{}l@{}}Implementação da busca por dados numéricos; \\ Implementação do rastreio das coordenadas do mouse\end{tabular} \\ \hline
+10/10 & 04/11 & \begin{tabular}[c]{@{}l@{}}Implementação das ferramentas de medidas;\\ Implementação da impressão;\\ Implementação do relatório\end{tabular} \\ \hline
 \end{tabular}
 \end{table}
 
 \section{Reflexão por parte do aluno sobre as principais contribuições ao projeto}
-Como o projeto foi iniciado do zero comigo, minha contribuição está em todo o projeto. Toda a fundação do projeto está sendo feita por mim, desde definição da arquitetura até a interface, sendo elas construídas pensando na manutenibilidade do sistema como um todo, além ainda de procurar manter o código de fácil extensão e modificação (o \textit{framework} utilizado no \textit{backend} possibilita isso), entregar um código padronizado e de qualidade é uma preocupação. Também há documentação em código deixando mais claro seu funcionamento em alguns pontos para facilitar o entendimento do que aquele trecho de código está fazendo, pois há uma preocupação de minha parte para com quem venha a mexer em meu código depois de mim, ou mesmo que entre outro membro no projeto e até mesmo caso eu volto a ver o código depois de um tempo e lembrar o que o mesmo faz. Outra preocupação também está sendo quanto ao \textit{pipeline} do desenvolvimento da aplicação, buscando deixá-lo o simples de se entender e usar, melhorando a produtividade durante o processo de desenvolvimento.
+No decorrer do projeto, a base de código cresce e fica cada vez mais complexa, para tentar contornar essas situações e mitigar possíveis problemas futuros lá na frente, a adoção de novas tecnologias se faz necessário, como foi e está sendo o caso do GulpJS, quando todos os componentes React estavam em um mesmo arquivo era fácil transpilar ele, porém o número de componentes foi aumentando e então foram separados cada um no seu arquivo, transpilar tudo na mão daria trabalho, mas com o uso do GulpJS podemos definir uma tarefa que ao ser executada faz a transpilação de todos os componentes para um único arquivo final, sem falar em outros processos como minificação (técnica empregada para comprimir arquivos CSS e JavaScript) e \textit{lint} (análise estática de código). Ao final do estágio, busca-se deixar um \textit{workflow} bem definido para manter a qualidade do código durante todo o processo de desenvolvimento e melhorar a produtividade deste, desde o preparo do ambiente de desenvolvimento até a preparação do fonte para ser utilizado em produção.
 
 \section{Relação dos principais conhecimentos obtidos nas disciplinas do curso e que foram de importância para o estágio}
 Algumas disciplinas da graduação expõem conteúdos que foram e/ou estão sendo importantes no desenvolvimento do projeto no estágio:
@@ -116,13 +122,14 @@ Algumas disciplinas da graduação expõem conteúdos que foram e/ou estão send
 \end{enumerate}
 
 \section{Reflexão sobre as dificuldades enfrentadas pelo estagiário na organização}
-No começo do projeto tive um pouco de dificuldades em configurar o projeto no apache, na verdade o problema foi na hora de mudar a estrutura do diretório do projeto localmente devido a um arquivo de configuração que basicamente faz a reescrita das URLs que chegam para a aplicação através do Apache. Também durante o primeiro mês, como o estágio é remoto, mesmo separando e distribuindo as 30 horas semanais ao longo da semana tive um pouco de receio quanto a minha produtividade, as vezes me perguntava se eu realmente estava sendo produtivo o suficiente para com o projeto, mas ao longo dos encontros quinzenais, fui me aquietando devido ao feedback positivo do meu supervisor na organização.
-Achei que pudesse ter dificuldades de comunicação com meu supervisor e eventualmente com a equipe responsável por me passar os dados que trabalharei na exibição do projeto, já que eles não são pessoas técnicas da minha área mas não tive dificuldades, inclusive como recomendação do meu supervisor realizei 2 \textit{workshop} sobre o software QGIS que é onde são gerados os dados que me enviam, sendo um no começo mês de agosto e outro nesse mês passado, que ao meu ver contribuiram não só em conhecimento como também na parte de comunicação devido a termos técnicos e também na hora de trabalhar na arquitetura de informação do sistema, usando de modo apropriado palavras técnicas da área deles.
+Entender como um \textit{plugin} funciona e adaptá-lo a sua própria necessidade se mostrou um grande desafio, cheguei até mesmo me perguntar se não seria mais fácil fazer do zero. Muitas vezes a documentação desses \textit{plugins} não é muito clara no que diz respeito a como as coisas funcionam, aí você precisar alterar algumas coisas mas não sabe por onde começa, levou tempo e paciência adaptar o controle de medidas. A impressão da página do sistema também não foi algo amigável de se fazer, pois devido a como o Leaflet trabalha a impressão não saia centralizada, nem a documentação me ajudou a resolver esse problema, mas boa parte do problema foi entender os eventos de impressão do navegador, e por final ficou sendo necessário abrir uma exibição da impressão sem mandar imprimir automaticamente.
 
 \section{Relação de tópicos que poderiam ser estudados no curso de Computação e que foram necessários no estágio.}
 Os tópicos a seguir são alguns dos tópicos necessário no estágio que acredito que poderiam ter sido abordados no curso de Computação:
 \begin{itemize}
   \item \textbf{Git:} tecnologia para versionamento popular que merece atenção, pois permite além de fazer o controle das versões do código torna fácil realizar \textit{rollback} na base de código em algum ponto especifíco do tempo.
+  \item \textbf{Impressão de páginas web:} o que se vê no navegador nem sempre fica do mesmo jeito no papel na hora da impressão, apanhei bastante para fazer essa \textit{feature}, isso porquê era para ser feita apenas em um tipo e modelo de folha (A4 em paisagem).
+  \item \textbf{Automatizadores de tarefas:} independente da linguagem e ambiente, é visível a agilidade que essas ferramentas trazem, acredito que se nós alunos tivéssemos algum conhecimento sobre isso podíamos melhorar a  qualidade de nossos trabalhos e projetos práticos, que aliás é o que mais toma nosso tempo durante toda a graduação.
 \end{itemize}
 
 \end{document}
